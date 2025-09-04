@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, jsonify, redirect, url_for
-from AQI import get_available_states, fetch_realtime_aqi
+from AQI import get_available_states, fetch_realtime_aqi, generate_state_pollutant_distribution_plot
 import folium
 from folium.plugins import MarkerCluster, BeautifyIcon
 
@@ -56,6 +56,9 @@ def results():
         return redirect(url_for('index'))
 
     raw = fetch_realtime_aqi(selected_state)
+
+    # Generate/overwrite graph for the selected state whenever data is fetched/refreshed
+    graph_rel_path = generate_state_pollutant_distribution_plot(selected_state, raw)
 
     # Enrich rows with AQI numbers and categories for styling
     data = []
@@ -141,7 +144,7 @@ def results():
 
     map_html = fmap._repr_html_()
 
-    return render_template('results.html', state=selected_state, data=data, map_html=map_html)
+    return render_template('results.html', state=selected_state, data=data, map_html=map_html, graph_rel_path=graph_rel_path)
 
 
 # JSON endpoints

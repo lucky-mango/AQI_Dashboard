@@ -10,6 +10,12 @@
     <div>
         <h2 class="custom-heading">AQI results for {{ state }}</h2>
 
+        {% if graph_rel_path %}
+        <div style="margin-bottom:16px; text-align:center;">
+            <img src="{{ url_for('static', filename=graph_rel_path) }}" alt="Pollutant distribution graph for {{ state }}" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;"/>
+        </div>
+        {% endif %}
+
         {% if not data or data|length == 0 %}
             <p>No data found.</p>
         {% else %}
