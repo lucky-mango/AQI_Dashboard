@@ -1,0 +1,78 @@
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+}
+
+.results-table th, .results-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.results-table thead th {
+  position: sticky;
+  top: 0;
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.results-table tbody tr:hover {
+  background: #f6f9ff;
+}
+
+.custom-heading {
+  margin-bottom: 16px;
+}
+
+.status-row--empty p {
+  color: #666;
+}
+
+a {
+  color: #4A90E2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* AQI category row colors */
+.row--good { background-color: #e7f6ef; }
+.row--satisfactory { background-color: #fff8d6; }
+.row--moderate { background-color: #ffe7d6; }
+.row--poor { background-color: #ffe0e0; }
+.row--very-poor { background-color: #f0e0ff; }
+.row--severe { background-color: #f6d6d6; }
+.row--unknown { background-color: #fafafa; }
+
+/* Back button */
+.actions { margin-top: 16px; }
+.btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #cfd8e3;
+  background: #ffffff;
+  color: #111827;
+  text-decoration: none;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:hover { background: #f3f4f6; }
+.btn:active { background: #e5e7eb; }
+.btn-secondary { }
+
+/* Map container */
+.map-container {
+  margin: 12px 0 16px;
+  width: 100%;
+  height: 480px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+

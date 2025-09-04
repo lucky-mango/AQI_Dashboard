@@ -1,0 +1,79 @@
+/* General reset if needed */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Center the entire content */
+body {
+  padding-top: 100px;
+  display: flex;
+  justify-content: center;  /* Horizontally center the content */
+  align-items: flex-start;      /* Vertically center the content */
+  height: 100vh;
+  background-color: #f4f4f9; /* Optional: light background for contrast */
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Form styling */
+form {
+  text-align: center; /* Center the form text */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 200%;
+  max-width: 800px;
+}
+
+
+/* Focus effect for dropdown */
+select:focus {
+  border-color: #7a9af7;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(122, 154, 247, 0.3);
+}
+
+/* Style the submit button */
+input[type="submit"], button[type="submit"] {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #4A90E2;  /* Button color */
+  color: white;                /* Text color */
+  border: none;                /* No border */
+  border-radius: 8px;          /* Rounded corners */
+  cursor: pointer;             /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect */
+input[type="submit"]:hover, button[type="submit"]:hover {
+  background-color: #357ABD;   /* Darker blue */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Active effect when clicked */
+input[type="submit"]:active, button[type="submit"]:active {
+  background-color: #2E6BB3;   /* Even darker blue */
+  transform: translateY(0);     /* Reset position */
+}
+
+/* Style the heading */
+.custom-heading {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4A90E2;
+  text-align: center;  /* Ensure the heading is centered */
+  margin-bottom: 20px;  /* Space below the heading */
+}
+
+select {
+  width: 200px;       /* Width of the dropdown */
+  padding: 8px 12px;  /* Space inside the dropdown */
+  font-size: 1rem;    /* Text size */
+  border-radius: 6px; /* Rounded corners (optional) */
+  max-height: 100px;     /* Controls height of dropdown list */
+  overflow-y: auto;
+}

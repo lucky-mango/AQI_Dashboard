@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+
+{%block head%}
+
+{%endblock%}
+
+{%block body%}
+
+
+        <form method="post" action="{{ url_for('results') }}">
+            <h2 class="custom-heading">Select a state to find its pollutant statistics</h2>
+            <select name="state" id="state" required >
+                <option value="" disabled selected>Select a State</option>
+                {% for state in states %}
+                    <option value="{{ state }}">{{ state }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Get Data">
+        </form>
+
+
+{%endblock%}

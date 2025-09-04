@@ -1,0 +1,54 @@
+{%extends 'base.html'%}
+
+
+{%block head%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+{%endblock%}
+
+{%block body%}
+
+    <div>
+        <h2 class="custom-heading">AQI results for {{ state }}</h2>
+
+        {% if not data or data|length == 0 %}
+            <p>No data found.</p>
+        {% else %}
+            <div id="map" class="map-container">
+                {{ map_html|safe }}
+            </div>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Station</th>
+                        <th>Pollutant</th>
+                        <th>AQI</th>
+                        <th>Avg Value</th>
+                        <th>Last Update</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in data %}
+                    <tr class="row--{{ entry.aqi_category }}">
+                        <td>{{ entry.station }}</td>
+                        <td>{{ entry.pollutant_id }}</td>
+                        <td>{{ entry.aqi if entry.aqi is not none else '-' }}</td>
+                        <td>{{ entry.avg_value }}</td>
+                        <td>{{ entry.last_update }}</td>
+                        <td>{{ entry.latitude }}</td>
+                        <td>{{ entry.longitude }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        <div class="actions">
+            <a class="btn btn-secondary" href="{{ url_for('index') }}">Back to selection</a>
+        </div>
+    </div>
+
+{%endblock%}
+
+
