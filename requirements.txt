@@ -3,3 +3,13 @@ requests==2.32.4
 python-dotenv==1.0.1
 folium==0.20.0
 
+# Added for server-side plotting
+pandas==2.2.2
+seaborn==0.13.2
+matplotlib==3.9.0
+
+# Added for server-side plotting
+pandas==2.2.2
+seaborn==0.13.2
+matplotlib==3.9.0
+
