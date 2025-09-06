@@ -3,7 +3,7 @@ services:
     name: aqi-dashboard
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 flask.app:app
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --chdir flask app:app
     envVars:
       - key: FLASK_DEBUG
         value: 0

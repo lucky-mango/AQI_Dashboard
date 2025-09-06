@@ -4,6 +4,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+flask/env/
 
 # Python cache
 __pycache__/
