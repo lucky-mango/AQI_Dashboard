@@ -43,19 +43,30 @@ def _aqi_category(aqi: int | None):
 
 app = Flask(__name__)
 
+# Configure Flask for production
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
+
 @app.route('/', methods=['GET'])
 def index():
-    states = sorted(get_available_states())
-    return render_template("index.html", states=states)
+    try:
+        states = sorted(get_available_states())
+        return render_template("index.html", states=states)
+    except Exception as e:
+        app.logger.error(f"Error in index route: {str(e)}")
+        return render_template("index.html", states=[]), 500
 
 
 @app.route('/results', methods=['POST'])
 def results():
-    selected_state = (request.form.get('state') or '').strip()
-    if not selected_state:
-        return redirect(url_for('index'))
+    try:
+        selected_state = (request.form.get('state') or '').strip()
+        if not selected_state:
+            return redirect(url_for('index'))
 
-    raw = fetch_realtime_aqi(selected_state)
+        raw = fetch_realtime_aqi(selected_state)
+    except Exception as e:
+        app.logger.error(f"Error fetching AQI data: {str(e)}")
+        return redirect(url_for('index'))
 
     # Generate/overwrite graph for the selected state whenever data is fetched/refreshed
     graph_rel_path = generate_state_pollutant_distribution_plot(selected_state, raw)
@@ -150,17 +161,25 @@ def results():
 # JSON endpoints
 @app.route('/api/states', methods=['GET'])
 def api_states():
-    return jsonify(sorted(get_available_states()))
+    try:
+        return jsonify(sorted(get_available_states()))
+    except Exception as e:
+        app.logger.error(f"Error in api_states: {str(e)}")
+        return jsonify({"error": "Failed to fetch states"}), 500
 
 
 @app.route('/api/aqi', methods=['GET'])
 def api_aqi():
-    state = (request.args.get('state') or '').strip()
-    if not state:
-        return jsonify({"error": "Missing required query parameter 'state'"}), 400
+    try:
+        state = (request.args.get('state') or '').strip()
+        if not state:
+            return jsonify({"error": "Missing required query parameter 'state'"}), 400
 
-    data = fetch_realtime_aqi(state)
-    return jsonify(data)
+        data = fetch_realtime_aqi(state)
+        return jsonify(data)
+    except Exception as e:
+        app.logger.error(f"Error in api_aqi: {str(e)}")
+        return jsonify({"error": "Failed to fetch AQI data"}), 500
 
 
 if __name__ == "__main__":
