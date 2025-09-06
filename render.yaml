@@ -1,8 +1,8 @@
 services:
   - type: web
     name: aqi-dashboard
-    env: python
-    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    runtime: python
+    buildCommand: "pip install --no-cache-dir --only-binary=:all: -r requirements.txt"
     startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --chdir flask app:app
     envVars:
       - key: FLASK_DEBUG
