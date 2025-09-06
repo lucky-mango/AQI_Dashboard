@@ -2,6 +2,9 @@
 
 A simple Flask-based dashboard to fetch and visualize Air Quality Index (AQI) data. It renders an interactive map and result views using `folium` and standard Flask templates.
 
+### 🌐 Live Demo
+**Access the live application:** [https://aqi-dashboard-a4fm.onrender.com/](https://aqi-dashboard-a4fm.onrender.com/)
+
 ### Features
 - **Flask app** serving pages from `templates/` and static assets from `static/`
 - **Interactive map** rendering (via `folium`)
