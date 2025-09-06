@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: aqi-dashboard
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd flask && python app.py
+    envVars:
+      - key: FLASK_DEBUG
+        value: 0
+      - key: PORT
+        value: 10000
+    healthCheckPath: /
+    plan: free

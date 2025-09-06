@@ -11,49 +11,80 @@
         <h2 class="custom-heading">AQI results for {{ state }}</h2>
 
         {% if graph_rel_path %}
-        <div style="margin-bottom:16px; text-align:center;">
-            <img src="{{ url_for('static', filename=graph_rel_path) }}" alt="Pollutant distribution graph for {{ state }}" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;"/>
+        <div class="graph-wrapper">
+            <img src="{{ url_for('static', filename=graph_rel_path) }}" alt="Pollutant distribution graph for {{ state }}" />
         </div>
         {% endif %}
 
         {% if not data or data|length == 0 %}
             <p>No data found.</p>
         {% else %}
-            <div id="map" class="map-container">
-                {{ map_html|safe }}
+            <div class="results-grid">
+                <div class="grid-item">
+                    <div id="map" class="map-container">
+                        {{ map_html|safe }}
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="table-card">
+                        <div class="table-card__header">
+                            <div>
+                                <strong>Pollutant readings</strong>
+                                <span class="muted">(scroll to view more)</span>
+                            </div>
+                            <button class="btn btn-sm" id="toggle-table-size" type="button">Expand</button>
+                        </div>
+                        <div class="table-scroll" id="table-scroll">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Station</th>
+                                        <th>Pollutant</th>
+                                        <th>AQI</th>
+                                        <th>Avg Value</th>
+                                        <th>Last Update</th>
+                                        <th>Latitude</th>
+                                        <th>Longitude</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for entry in data %}
+                                    <tr class="row--{{ entry.aqi_category }}">
+                                        <td>{{ entry.station }}</td>
+                                        <td>{{ entry.pollutant_id }}</td>
+                                        <td>{{ entry.aqi if entry.aqi is not none else '-' }}</td>
+                                        <td>{{ entry.avg_value }}</td>
+                                        <td>{{ entry.last_update }}</td>
+                                        <td>{{ entry.latitude }}</td>
+                                        <td>{{ entry.longitude }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>Station</th>
-                        <th>Pollutant</th>
-                        <th>AQI</th>
-                        <th>Avg Value</th>
-                        <th>Last Update</th>
-                        <th>Latitude</th>
-                        <th>Longitude</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entry in data %}
-                    <tr class="row--{{ entry.aqi_category }}">
-                        <td>{{ entry.station }}</td>
-                        <td>{{ entry.pollutant_id }}</td>
-                        <td>{{ entry.aqi if entry.aqi is not none else '-' }}</td>
-                        <td>{{ entry.avg_value }}</td>
-                        <td>{{ entry.last_update }}</td>
-                        <td>{{ entry.latitude }}</td>
-                        <td>{{ entry.longitude }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
         {% endif %}
 
         <div class="actions">
             <a class="btn btn-secondary" href="{{ url_for('index') }}">Back to selection</a>
         </div>
     </div>
+
+    <script>
+    (function(){
+      const btn = document.getElementById('toggle-table-size');
+      const scroller = document.getElementById('table-scroll');
+      if (!btn || !scroller) return;
+      let expanded = false;
+      btn.addEventListener('click', () => {
+        expanded = !expanded;
+        scroller.classList.toggle('table-scroll--expanded', expanded);
+        btn.textContent = expanded ? 'Collapse' : 'Expand';
+      });
+    })();
+    </script>
 
 {%endblock%}
 
